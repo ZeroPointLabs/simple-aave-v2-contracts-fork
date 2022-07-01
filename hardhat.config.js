@@ -50,7 +50,7 @@ module.exports = {
     localhost: {
       url: "HTTP://127.0.0.1:7545",
       accounts: [
-        "1a0ed5c6e7bc24c718fa88ef1d39c100580d736b5143e0352439f49be5559072",
+        "19f6f8a8a66ee1c3192ac66902575d69f0f6db39370a9f8a90d095cfd48f1c21",
       ],
       chainID: 5777,
     },

@@ -41,19 +41,20 @@ async function verify(contractAddress, args) {
 
 //@Author
 //Part 1: Deploy basic libraries of the protocol
+//After running the script, copy and paste the deployed addresses to deployedAddresses.js
 async function main() {
   //@Deploy GenericLogic
-  console.log("Deploying GenericLogic Library...");
+  console.log("Deploying @GenericLogic Library...");
   const GenericLogicFactory = await ethers.getContractFactory("GenericLogic");
   const GenericLogic = await GenericLogicFactory.deploy();
   await GenericLogic.deployed();
-  console.log("Successfully deployed GenericLogic at address: ");
+  console.log("Successfully deployed @GenericLogic at address: ");
   console.log(GenericLogic.address);
   console.log("\n");
 
   //@Deploy ValidationLogic
   //Require GenericLogic's address as arguement
-  console.log("Deploying ValidationLogic Library...");
+  console.log("Deploying @ValidationLogic Library...");
   const ValidationLogicFactory = await ethers.getContractFactory(
     "ValidationLogic",
     {
@@ -64,19 +65,22 @@ async function main() {
   );
   const ValidationLogic = await ValidationLogicFactory.deploy();
   await ValidationLogic.deployed();
-  console.log("Successfully deployed ValidationLogic at address: ");
+  console.log("Successfully deployed @ValidationLogic at address: ");
   console.log(ValidationLogic.address);
   console.log("\n");
 
   //@Deploy ReserveLogic
-  console.log("Deploying ReserveLogic Library...");
+  console.log("Deploying @ReserveLogic Library...");
   const ReserveLogicFactory = await ethers.getContractFactory("ReserveLogic");
   const ReserveLogic = await ReserveLogicFactory.deploy();
   await ReserveLogic.deployed();
-  console.log("Successfully deployed ReserveLogic at address: ");
+  console.log("Successfully deployed @ReserveLogic at address: ");
   console.log(ReserveLogic.address);
   console.log("\n");
 
+  //@Author
+  //If Deployed on supported network, verify contracts through Etherscan API
+  console.log("Attempting to verify contracts on Etherscan");
   if (isSupportedNetwork()) {
     await GenericLogic.deployTransaction.wait(6);
     await verify(GenericLogic.address, []);
@@ -91,10 +95,12 @@ async function main() {
   }
 
   const message = `
-  GenericLogic: \"${GenericLogic.address}\"\n
-  ValidationLogic: \"${ValidationLogic.address}\"\n
-  ReserveLogic: \"${ReserveLogic.address}\"\n
+  GenericLogic: \"${GenericLogic.address}\",\n
+  ValidationLogic: \"${ValidationLogic.address}\",\n
+  ReserveLogic: \"${ReserveLogic.address}\",\n
   `;
+
+  console.log(message);
 
   fs.appendFile("./scripts/deployedAddresses.txt", message, function (err) {
     if (err) throw err;
